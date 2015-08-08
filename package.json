@@ -1,0 +1,19 @@
+{
+  "name": "twitter-challenge",
+  "version": "0.1.0",
+  "description": "Collect a feed of tweets from the Twitter Streaming API, parse the tweets to collect a term-count data structure.",
+  "main": "index.js",
+  "keywords": [
+    "twitter",
+    "stream",
+    "nlp"
+  ],
+  "author": "Alex Kahn",
+  "license": "MIT",
+  "dependencies": {
+    "progress": "^1.1.8",
+    "split": "^1.0.0",
+    "through": "^2.3.8",
+    "twit": "^2.1.0"
+  }
+}
