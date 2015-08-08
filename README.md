@@ -17,14 +17,17 @@ Now you have all of the library dependencies installed in a local ```node_module
 Assuming you've installed the module and it's dependencies, you can simply:
 
 ```sh
-node index.js
+node index.js COMMAND
+
+  collect  -- Get some data from Twitter
+  process  -- Get a term count with the top 10 terms
 ```
 
 If you don't have a file called ```out.json``` then it will do data collection for you, assuming you have environment variables that hold your Twitter API credentials. If you do have a file of tweet data, then it will just run the processing script against it and you'll be looking at a shiny table of results in no time at all.
 
 ## Details
 
-The module uses the [Twit]() library to connect to the Streaming API and adds a query parameter for getting tweets that are in "English." When collection is complete, the [process](lib/process.js) script creates a read stream of the data which has the form:
+The module uses the [Twit](https://www.npmjs.com/package/twit) library to connect to the Streaming API and adds a query parameter for getting tweets that are in "English." When collection is complete, the [process](lib/process.js) script creates a read stream of the data which has the form:
 
 ```
 {keys: tweetStuff}
@@ -32,9 +35,9 @@ The module uses the [Twit]() library to connect to the Streaming API and adds a 
 {keys: tweetStuff}
 ```
 
-Reading the file all at once would probably make it more difficult (plus could require adding more memory to the Node.js process) but treating the data as newline delimited JSON allows for using the [split]() library to emit each tweet.
+Reading the file all at once would probably make it more difficult (plus could require adding more memory to the Node.js process) but treating the data as newline delimited JSON allows for using the [split](https://www.npmjs.com/package/split) library to emit each tweet.
 
-Each tweet is lightly sanitized and normalized to lower case using a transform stream via [through](), then sent through another transform stream that removes English Stop Words collected [here](http://www.ranks.nl/stopwords). It should be noted that at this point, there should be some stemming but implementing stemming via some NLP library or a roll-your-own stemmer felt beyond the scope of the problem.
+Each tweet is lightly sanitized and normalized to lower case using a transform stream via [through](https://www.npmjs.com/package/through), then sent through another transform stream that removes English Stop Words collected [here](http://www.ranks.nl/stopwords). It should be noted that at this point, there should be some stemming but implementing stemming via some NLP library or a roll-your-own stemmer felt beyond the scope of the problem.
 
 Once those transformations are finished, the data is broken up by whitespace and further sanitized for empty strings or blocks of numbers (which could have significance depening on the context) then put into a map-like object so terms can be counted as they are read from the previous stream. That object is then put through one last function when the stream is complete that coerces it into an array whose elements are objects of the form:
 
