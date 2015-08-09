@@ -23,7 +23,9 @@ node index.js COMMAND
   process  -- Get a term count with the top 10 terms
 ```
 
-If you don't have a file called ```out.json``` then it will do data collection for you, assuming you have environment variables that hold your Twitter API credentials. If you do have a file of tweet data, then it will just run the processing script against it and you'll be looking at a shiny table of results in no time at all.
+If you don't have a file called ```out.json``` you can copy the sample data with ```cp out.json.example``` or, if you want to take a quick break, collect some data with your Twitter API credentials. The `process` script assumes you have environment variables that hold your Twitter API credentials, you can ```cp env.sh.template env.sh``` and enter your API keys/tokens/secrets there. All you'll need to do is ```source env.sh``` and you're good to go.
+
+If you do have a file of tweet data, then it will just run the processing script against it and you'll be looking at a shiny table of results in no time at all.
 
 ## Details
 
